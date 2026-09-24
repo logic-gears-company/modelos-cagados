@@ -1,0 +1,10 @@
+.venv/
+cache/
+models/
+__pycache__/
+*.pyc
+
+outputs/audio/
+outputs/text/
+
+# Los modelos permanecen exclusivamente en la VPS.
