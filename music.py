@@ -3,6 +3,7 @@ import time
 
 import scipy.io.wavfile
 import torch
+from tqdm import tqdm
 
 from transformers import AutoProcessor, MusicgenForConditionalGeneration
 
@@ -37,6 +38,7 @@ def generate(prompt, output, seconds=5):
 
     print(f"Prompt: {prompt}")
     print(f"Duración: {seconds}s")
+    print(f"Pasos de generación: {max_new_tokens}")
     print("Generando música...")
 
     start = time.time()
@@ -47,6 +49,8 @@ def generate(prompt, output, seconds=5):
             max_new_tokens=max_new_tokens,
         )
 
+    elapsed = time.time() - start
+
     audio = audio_values[0, 0].cpu().numpy()
 
     scipy.io.wavfile.write(
@@ -55,8 +59,10 @@ def generate(prompt, output, seconds=5):
         audio,
     )
 
+    print()
+    print("Generación completada.")
     print(f"Audio: {output}")
-    print(f"Tiempo: {time.time() - start:.2f}s")
+    print(f"Tiempo: {elapsed:.2f}s")
 
 
 if __name__ == "__main__":
